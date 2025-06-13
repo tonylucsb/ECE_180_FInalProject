@@ -1,0 +1,32 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+The following is the project description and limitations:
+2.2 NutriBench
+
+Nutrition estimation plays an important role in everyday life, especially for making informed dietary decisions. In this task, you are given a meal description and are asked to predict the carbohydrate (carb) content of the meal.
+
+Dataset. The dataset for this task can be found at: https://drive.google.com/drive/folders/1U1O_gALFjmXX9pTydm-C7i3I_K9GzMfY?usp=drive_link. The training set and validation set contain both meal descriptions and their corresponding carbohydrate (carb) values, while the test set contains only the descriptions. For submission, please append a new column to the test set with predicted carb values, following the same format as the training set.
+
+Preprocessing. You are free to use any method to extract features from the meal descriptions for model training. Two commonly used options are:
+
+• TF-IDF: This is a classical method that converts text into sparse numeric vectors based on word frequency. It is simple, efficient, and works well with linear models. You can use it via TfidfVectorizer from scikit-learn.
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer()
+X_train = vectorizer.fit_transform(train_df["query"])
+
+• Sentence Transformers: This is a modern method using pre-trained models like BERT to encode sentences into dense embeddings that capture semantic meaning. You can use the sentence-transformers library to obtain these features.
+
+from sentence_transformers import SentenceTransformer
+model = SentenceTransformer("all-MiniLM-L6-v2")
+X_train = model.encode(train_df["query"].tolist())
+
+Model. You are allowed to use any model we have covered in class. For example, you can use a simple Multi-Layer Perceptron (MLP), or models like RNNs and LSTMs. You may also try using Transformer to predict the carbohydrate values based on the extracted features.
+
+Submission
+1. Report. Organize your report into sections, including an introduction, methods (data preprocessing, model design, and training strategy), and results with analysis. You are expected to try at least three variations, such as different preprocessing methods or model architectures. For each variation, report the performance on the validation set. Finally, choose the best-performing approach to generate predictions on the test set.
+
+The models referred to in class include MLP, CNN, RNN, LSTM, RNN/LSTM with Attention, and Transformers. In the class we have used gradient descent, stochastic gradient descent, batch gradient descent, mini batch gradient descent, AdaGrad, and Adam. Use only these methods and technologies and optimizations.
